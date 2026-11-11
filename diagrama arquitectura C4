@@ -1,0 +1,80 @@
+
+# Arquitectura C4 – Container Diagram de SecurityAuditLab
+
+## 1. Descripción general de la arquitectura
+
+El diagrama de arquitectura C4 – Container Diagram representa la estructura funcional y las interacciones principales del laboratorio **SecurityAuditLab**, diseñado para realizar auditorías estáticas de seguridad de código fuente mediante inteligencia artificial, utilizando **OpenAI Codex CLI** como agente de análisis.
+
+La arquitectura describe cómo interactúan el auditor de seguridad, Codex CLI, la skill especializada `security-audit`, los archivos de código fuente y el informe de auditoría. También representa la integración con el servicio externo de inteligencia artificial, que proporciona las capacidades de interpretación y generación de respuestas utilizadas por Codex durante el análisis.
+
+El modelo delimita el entorno interno del laboratorio y diferencia los componentes que participan directamente en la auditoría de los servicios externos que proporcionan capacidades de inteligencia artificial.
+
+## 2. Componentes de la arquitectura
+
+| Componente | Tipo C4 | Responsabilidad |
+|---|---|---|
+| Auditor de Seguridad | Persona | Solicita, supervisa y valida los resultados de la auditoría. |
+| SecurityAuditLab | Límite del sistema | Delimita el entorno de trabajo del laboratorio. |
+| Codex CLI | Herramienta de ejecución | Interpreta instrucciones, coordina el análisis del código y presenta los hallazgos. |
+| Security Audit Skill | Archivo de instrucciones | Define la metodología, los criterios, los controles y las reglas de análisis de seguridad. |
+| Código Fuente | Artefacto de software | Contiene los archivos del proyecto sujetos a revisión estática. |
+| Informe de Auditoría | Artefacto de salida | Consolida hallazgos, severidades, evidencias, impactos y recomendaciones. |
+| Servicio de IA | Sistema externo | Proporciona el modelo de inteligencia artificial utilizado por Codex para interpretar instrucciones y apoyar el análisis. |
+
+## 3. Interacciones y flujo de operación
+
+El funcionamiento de la arquitectura se desarrolla mediante las siguientes interacciones:
+
+1. **Solicitud de auditoría:** el auditor de seguridad inicia una sesión de Codex CLI y proporciona las instrucciones necesarias para ejecutar la revisión del proyecto. Codex recibe la solicitud y coordina las actividades de análisis.
+
+2. **Consulta de la metodología:** Codex CLI consulta la skill `security-audit`, ubicada en `.agents/skills/security-audit/SKILL.md`. Este archivo contiene las instrucciones especializadas que establecen el alcance, los criterios de revisión y las restricciones de ejecución.
+
+3. **Análisis del código fuente:** Codex CLI revisa los archivos disponibles del proyecto, como `app.js`, mediante un enfoque de análisis estático y de solo lectura. Durante esta actividad identifica patrones potencialmente vulnerables y recopila evidencias técnicas.
+
+4. **Asistencia del servicio de IA:** Codex CLI utiliza el servicio externo de inteligencia artificial para interpretar las instrucciones y apoyar la generación de respuestas y análisis. El servicio devuelve información que Codex procesa dentro del flujo de auditoría.
+
+5. **Generación del informe:** Codex CLI presenta los resultados en formato de texto o Markdown, incluyendo identificadores de hallazgos, clasificación de severidad, ubicación en el código, evidencia técnica, impacto potencial y recomendaciones de remediación.
+
+6. **Validación de resultados:** el informe se entrega al auditor de seguridad, quien revisa los hallazgos, evalúa su validez técnica y determina las acciones de remediación correspondientes.
+
+## 4. Relaciones entre componentes
+
+Las relaciones representadas en el diagrama corresponden a los siguientes intercambios:
+
+| Origen | Destino | Relación | Propósito |
+|---|---|---|---|
+| Auditor de Seguridad | Codex CLI | Solicita y supervisa | Iniciar y controlar la auditoría. |
+| Codex CLI | Servicio de IA | Solicita asistencia | Obtener capacidades de interpretación y análisis. |
+| Servicio de IA | Codex CLI | Devuelve respuestas | Proporcionar resultados del procesamiento de IA. |
+| Codex CLI | Security Audit Skill | Consulta (lectura) | Obtener criterios y metodología de auditoría. |
+| Codex CLI | Código Fuente | Analiza (solo lectura) | Revisar los archivos del proyecto. |
+| Codex CLI | Informe de Auditoría | Presenta resultados | Generar los hallazgos y recomendaciones. |
+| Informe de Auditoría | Auditor de Seguridad | Entrega hallazgos | Facilitar la revisión y validación técnica. |
+
+## 5. Consideraciones de seguridad y control
+
+La arquitectura contempla un enfoque de análisis estático, priorizando la consulta de archivos y la generación de resultados sin modificar el código fuente.
+
+Se establecen las siguientes restricciones operativas:
+
+- Ejecutar el análisis bajo un esquema de solo lectura.
+- No modificar archivos del proyecto.
+- No instalar dependencias.
+- No ejecutar la aplicación analizada.
+- No realizar pruebas de explotación.
+- No acceder a sistemas externos como parte de las pruebas de auditoría.
+- No presentar hallazgos sin evidencia técnica suficiente.
+- Validar manualmente los resultados generados por el agente de IA.
+
+El auditor de seguridad mantiene la responsabilidad de supervisar el proceso y validar las conclusiones antes de aceptar los hallazgos como resultados definitivos.
+
+## 6. Resultado esperado
+
+El modelo C4 proporciona una vista estructural del laboratorio **SecurityAuditLab**, permitiendo identificar los componentes involucrados, sus responsabilidades, las dependencias externas y los flujos de información que intervienen en una auditoría estática asistida por inteligencia artificial.
+
+Esta arquitectura constituye la base para evolucionar el laboratorio hacia un modelo de evaluación comparativa entre diferentes agentes de IA, manteniendo el mismo código fuente, la misma metodología de auditoría y criterios homogéneos de evaluación.
+## Arquitectura
+
+Consulta el detalle de los componentes, interacciones y flujos del laboratorio:
+
+[Arquitectura C4 – Container Diagram](docs/ARQUITECTURA-C4.md)
